@@ -77,8 +77,7 @@ jobs:
       - name: Organize Artifacts
         run: |
           mkdir -p ./deploy
-          cp -f openwrt/bin/targets/ramips/mt7621/*xiaomi_mir3p*.bin ./deploy/ || true
-          cp -f openwrt/bin/targets/ramips/mt7621/*sysupgrade*.bin ./deploy/ || true
+          cp -f openwrt/bin/targets/ramips/mt7621/*.bin ./deploy/ || true
 
       - name: Upload Output Firmware
         uses: actions/upload-artifact@v4
