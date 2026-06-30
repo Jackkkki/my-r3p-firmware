@@ -77,7 +77,10 @@ jobs:
       - name: Organize Artifacts
         run: |
           mkdir -p ./deploy
-          find openwrt/bin/targets/ramips/mt7621/ -name "*xiaomi*" -o -name "*mir3p*" -o -name "*router-pro*" | xargs -I {} cp -f {} ./deploy/
+          # 放弃一切名字猜测，把 mt7621 目录下所有生成的 bin 固件全部无条件捞出来
+          find openwrt/bin/targets/ramips/mt7621/ -maxdepth 1 -name "*.bin" ! -name "*initramfs*" | xargs -I {} cp -f {} ./deploy/ || true
+          # 顺便把可能存在的 factory 镜像也捞一遍兜底
+          find openwrt/bin/targets/ramips/mt7621/ -maxdepth 1 -name "*.img" | xargs -I {} cp -f {} ./deploy/ || true
 
       - name: Upload Output Firmware
         uses: actions/upload-artifact@v4
